@@ -21,7 +21,7 @@ jobs:
             sed -i '/MY_DOMAIN/ s//fx-builder-widgets/' phpcs.xml
             mv phpcs.xml phpcs.xml.dist
         - name: CPCS checks
-          uses: 10up/wpcs-action@v2
+          uses: 10up/wpcs-action@2
           with:
             enable_warnings: 'true'
             extra_args: '--report-json=./phpcs.json'
