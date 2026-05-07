@@ -18,7 +18,7 @@ class ClassicPressDirectoryQuery {
 			return false;
 		}
 
-		$signature = md5( $type . serialize( $args ) );
+		$signature = md5( $type . serialize( $args ) ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
 		$saved = get_transient( self::PREFIX . '_q_' . $signature );
 		if ( $this->force !== true && $saved !== false ) {
 			return $saved;

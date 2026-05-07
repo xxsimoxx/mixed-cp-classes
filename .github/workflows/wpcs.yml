@@ -1,4 +1,4 @@
-name: ClassicPress Directory Coding Standard checks.
+name: WordPress Coding Standard checks.
 
 on: [pull_request, push]
 
