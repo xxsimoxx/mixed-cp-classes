@@ -14,7 +14,7 @@ class ClassicPressDirectoryQuery {
 	}
 
 	private function query_dir( $args, $type = 'plugins' ) {
-		if ( ! in_array( $type, ['plugins', 'themes'] ) ) {
+		if ( ! in_array( $type, [ 'plugins', 'themes' ], true ) ) {
 			return false;
 		}
 
@@ -26,15 +26,15 @@ class ClassicPressDirectoryQuery {
 
 		$query    = add_query_arg( $args, 'https://directory.classicpress.net/wp-json/wp/v2/' . $type . '?per_page=' . $this->per_page . '&page=1' );
 		$response = wp_remote_get( $query );
-		if ( is_wp_error ( $response ) || wp_remote_retrieve_response_code($response) !== 200) {
+		if ( is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) !== 200) {
 			return false;
 		}
 
 		$headers = wp_remote_retrieve_headers( $response );
 		$pages   = (int) $headers['x-wp-totalpages'];
-		$posts   = json_decode( wp_remote_retrieve_body( $response ), true);
-		for ($i = 2; $i <= $pages; $i++) {
-			$query    = add_query_arg( ['page' => $i] , remove_query_arg( 'page', $query ) );
+		$posts   = json_decode( wp_remote_retrieve_body( $response ), true );
+		for ( $i = 2; $i <= $pages; $i++ ) {
+			$query    = add_query_arg( [ 'page' => $i ], remove_query_arg( 'page', $query ) );
 			$response = wp_remote_get( $query );
 			$posts    = array_merge( $posts, json_decode( wp_remote_retrieve_body( $response ), true ) );
 		}
@@ -43,7 +43,7 @@ class ClassicPressDirectoryQuery {
 	}
 
 	public function info_by_author( $author_id, $type = 'plugins' ) {
-		$posts = $this->query_dir( ['author' => $author_id], $type );
+		$posts = $this->query_dir( [ 'author' => $author_id ], $type );
 		if ( $posts === false ) {
 			return false;
 		}
@@ -63,7 +63,7 @@ class ClassicPressDirectoryQuery {
 		if ( is_array( $slugs ) ) {
 			$slugs = implode( ',', $slugs );
 		}
-		$posts = $this->query_dir( ['byslug' => $slugs], $type );
+		$posts = $this->query_dir( [ 'byslug' => $slugs ], $type );
 		if ( $posts === false ) {
 			return false;
 		}
