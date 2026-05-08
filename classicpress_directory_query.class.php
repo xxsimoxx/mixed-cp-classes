@@ -26,7 +26,7 @@ class ClassicPressDirectoryQuery {
 
 		$query    = add_query_arg( $args, 'https://directory.classicpress.net/wp-json/wp/v2/' . $type . '?per_page=' . $this->per_page . '&page=1' );
 		$response = wp_remote_get( $query );
-		if ( is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) !== 200) {
+		if ( is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) !== 200 ) {
 			return false;
 		}
 
